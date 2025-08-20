@@ -4,9 +4,11 @@ import { conn } from "./config/sequelize.js"
 
 //Tabelas
 import usuarioModel from "./models/usuarioModel.js"
+import pensamentoModel from "./models/pensamentoModel.js"
 
 //Rotas
 import usuarioRoutes from "./routes/usuarioRoutes.js"
+import pensamentoRoutes from "./routes/pensamentoRoutes.js"
 
 const app = express()
 
@@ -23,6 +25,7 @@ conn
     .catch((error) => console.log(error))
 
 app.use("/api/usuarios", usuarioRoutes)
+app.use("/api/pensamentos", pensamentoRoutes)
 
 app.get("/", () => {
     console.log("Olá, Mundo")

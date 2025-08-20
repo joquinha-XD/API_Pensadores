@@ -44,8 +44,7 @@ export const cadastrarUsuario = async (req, res) => {
     const usuario = {
         nome,
         email,
-        senha,
-        confirmar_senha
+        senha
     }
 
     try {
@@ -55,5 +54,48 @@ export const cadastrarUsuario = async (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({mensagem: "Erro interno ao cadastrar usuário"})
+    }
+}
+
+export const loginUsuario = async (req, res) => {
+    const { email, senha } = req.body
+
+    if(!email){
+        res.status(400).json({
+            erro: "Campo inválido",
+            mensagem:  "O campo email não pode ser nulo"
+        })
+        return
+    }
+    if(!senha){
+        res.status(400).json({
+            erro: "Campo inválido",
+            mensagem:  "O campo senha não pode ser nulo"
+        })
+        return
+    }
+
+    try {
+        const usuario = await usuarioModel.findOne({
+            where: {email}
+        })
+
+        if(!usuario){
+            res.status(404).json({
+                erro: "Email inválido",
+                mensagem: "Email não cadastrado"
+            })
+            return
+        }
+
+        if(usuario.senha !== senha){
+            res.status(400).json({mensagem: "Senha incorreta"})
+            return
+        }
+
+        res.status(200).json({mensagem: "Login realizado"})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({mensagem: "Erro interno ao logar usuário"})
     }
 }

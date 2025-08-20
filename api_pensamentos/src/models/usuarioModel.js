@@ -24,18 +24,15 @@ const usuarioModel = conn.define(
         senha: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        confirmar_senha: {
-            type: DataTypes.STRING,
-            allowNull: false
         }
     },
     {
         tableName: "usuarios",
         timestamps: true,
         createdAt: "created_at",
-        updatedAt: "updates_at"
+        updatedAt: "updated_at"
     }
 )
 
 export default usuarioModel;
+
